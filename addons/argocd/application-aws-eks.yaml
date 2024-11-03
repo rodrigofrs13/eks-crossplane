@@ -1,29 +1,30 @@
-# The ArgoCD Application for all Crossplane Managed Resources
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: aws-eks
+  name: eks-cluster
   namespace: argocd
-  labels:
-    crossplane.jonashackt.io: infrastructure
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: eks-project
   source:
-    repoURL: https://github.com/jonashackt/crossplane-argocd
+    repoURL: https://github.com/rodrigofrs13/poc-eks-crossplane
     targetRevision: HEAD
-    path: infrastructure/eks
+    path: ./cluster-eks
+    helm:
+      values: |
+        clusterName: meu-cluster-eks
+        region: us-west-2
+        nodeGroups:
+          - name: ng-1
+            instanceType: t3.medium
+            minSize: 1
+            maxSize: 3
+            desiredCapacity: 2
   destination:
-    namespace: default
     server: https://kubernetes.default.svc
+    namespace: eks-system
   syncPolicy:
     automated:
-      prune: true    
-    retry:
-      limit: 5
-      backoff:
-        duration: 5s 
-        factor: 2 
-        maxDuration: 1m
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
