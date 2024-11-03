@@ -1,18 +1,22 @@
-# The ArgoCD Application for all Crossplane Managed Resources
----
+# O Application 'sqs-queues' permite implantar recursos do Lambda que estão nos diretórios do GITHUB dentro do cluster utilizando o Crossplane.
+# https://argo-cd.readthedocs.io/en/stable/user-guide/skip_reconcile/
+
+export URL_REPO=https://github.com/rodrigofrs13/poc-eks-crossplane.git
+
+kubectl apply -f - <<EOF
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: aws-s3-project
+  name: bucket-s3
   namespace: argocd
   # labels:
   #   crossplane.jonashackt.io: infrastructure
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: s3-project
+  project: applications-project
   source:
-    repoURL: https://github.com/rodrigofrs13/poc-eks-crossplane
+    repoURL: ${URL_REPO}
     targetRevision: HEAD
     path: ./bucket-s3
   destination:
@@ -27,3 +31,4 @@ spec:
         duration: 5s 
         factor: 2 
         maxDuration: 1m
+EOF

@@ -1,7 +1,0 @@
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-aws-sqs
-spec:
-  package: xpkg.upbound.io/upbound/provider-aws-sqs:v0.44.0
-  
