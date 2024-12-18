@@ -1,6 +1,7 @@
 # https://docs.crossplane.io/v1.16/concepts/providers/
 # https://marketplace.upbound.io/providers/upbound/provider-family-aws/v1.16.0/providers
 
+
 export PROVIDER=irsa-providerconfig # Nome do DeploymentRuntimeConfig
 
 

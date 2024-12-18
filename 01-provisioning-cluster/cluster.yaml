@@ -26,7 +26,7 @@ karpenter:
 nodeGroups:
   - name: apps
     availabilityZones: ["us-east-1a", "us-east-1b", "us-east-1c"]
-    instanceType: t3.amedium
+    instanceType: t3a.medium
     desiredCapacity: 2
     minSize: 2
     maxSize: 4
